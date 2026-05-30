@@ -87,7 +87,7 @@
             <event_ui_triggered screen="'Lua_Loader'" control="'Ready'"/>
           </conditions>
           <actions>
-            <raise_lua_event name="'Lua_Loader.Load'" param="'extensions.vas_turret_behavior_resurrected.TurretBehavior'"/>
+            <raise_lua_event name="'Lua_Loader.Load'" param="'extensions.vas_turret_behavior_resurrected.turret_behavior'"/>
             <cancel_cue cue="this"/>
           </actions>
         </cue>
