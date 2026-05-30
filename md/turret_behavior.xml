@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mdscript name="VAS_TurretBehavior" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="md.xsd">
+  <!--
+    Loads the companion Lua and registers two right-click actions on selected_orders
+    via SirNukes Interact_Menu_API: copy turret behaviour from the right-clicked
+    ship to the other selected ships, either by turret type or by slot position.
+  -->
+  <cues>
+    <cue name="ModConfig" namespace="this" version="1">
+      <actions>
+        <set_value name="$debugEnabled" exact="false"/>
+      </actions>
+    </cue>
+
+    <cue name="StartSMO" instantiate="true">
+      <conditions>
+        <event_cue_signalled cue="md.Simple_Menu_Options.Reloaded"/>
+      </conditions>
+      <actions>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
+          $id = 'vas_tb_options_menu',
+          $columns = 2,
+          $title = {202600531,1},
+          $onOpen = BuildOptionsMenu,
+        ]"/>
+        <cancel_cue cue="this"/>
+      </actions>
+    </cue>
+
+    <cue name="BuildOptionsMenu" instantiate="true">
+      <conditions>
+        <event_cue_signalled/>
+      </conditions>
+      <actions>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Call_Table_Method" param="table[
+          $method = 'setColWidth',
+          $col = 1,
+          $width = 'Helper.standardButtonHeight',
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_CheckBox" param="table[
+          $id = 'debugEnabled',
+          $checked = md.VAS_TurretBehavior.ModConfig.$debugEnabled,
+          $col = 1,
+          $width = 'Helper.standardButtonHeight',
+          $height = 'Helper.standardButtonHeight',
+          $onClick = OnOptionsCheckboxChanged,
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+          $col = 2,
+          $text = {202600531,2},
+        ]"/>
+      </actions>
+    </cue>
+
+    <cue name="OnOptionsCheckboxChanged" instantiate="true">
+      <conditions>
+        <event_cue_signalled/>
+      </conditions>
+      <actions>
+        <set_value name="md.VAS_TurretBehavior.ModConfig.{'$' + event.param.$id}" exact="event.param.$checked"/>
+        <do_if value="event.param.$id == 'debugEnabled'">
+          <do_if value="event.param.$checked">
+            <set_value name="player.entity.$vas_tb_debug_chance" exact="100"/>
+          </do_if>
+          <do_else>
+            <set_value name="player.entity.$vas_tb_debug_chance" exact="0"/>
+          </do_else>
+        </do_if>
+        <cancel_cue cue="this"/>
+      </actions>
+    </cue>
+
+    <cue name="Root">
+      <actions>
+        <set_value name="$debugchance" exact="0" />
+        <do_if value="md.VAS_TurretBehavior.ModConfig.$debugEnabled">
+          <set_value name="$debugchance" exact="100"/>
+        </do_if>
+        <!-- This value propagates to the LUA script with
+             GetNPCBlackboard(cachedPlayerID, "$vas_tb_debug_chance") -->
+        <set_value name="player.entity.$vas_tb_debug_chance" exact="$debugchance"/>
+      </actions>
+      <cues>
+        <cue name="Load_Lua_Files" instantiate="true">
+          <conditions>
+            <event_ui_triggered screen="'Lua_Loader'" control="'Ready'"/>
+          </conditions>
+          <actions>
+            <raise_lua_event name="'Lua_Loader.Load'" param="'extensions.vas_turret_behavior_resurrected.TurretBehavior'"/>
+            <cancel_cue cue="this"/>
+          </actions>
+        </cue>
+
+        <cue name="Add_Interact_Actions" instantiate="true">
+          <conditions>
+            <event_cue_signalled cue="md.Interact_Menu_API.Get_Actions"/>
+          </conditions>
+          <actions>
+            <set_value name="$target" exact="@event.param.$object"/>
+            <set_value name="$ships" exact="@event.param.$selectedplayerships"/>
+            <do_if value="@$target.isclass.ship and @$target.isplayerowned">
+              <do_if value="@$ships.{1} != null">
+                <signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param="table[
+                  $id       = 'vas_tb_copy_by_type',
+                  $section  = 'selected_orders',
+                  $text     = {202600531,10},
+                  $callback = CopyByType,
+                ]"/>
+                <signal_cue_instantly cue="md.Interact_Menu_API.Add_Action" param="table[
+                  $id       = 'vas_tb_copy_by_slot',
+                  $section  = 'selected_orders',
+                  $text     = {202600531,11},
+                  $callback = CopyBySlot,
+                ]"/>
+              </do_if>
+            </do_if>
+            <cancel_cue cue="this"/>
+          </actions>
+        </cue>
+
+        <cue name="CopyByType">
+          <conditions>
+            <event_cue_signalled/>
+          </conditions>
+          <actions>
+            <set_value name="player.entity.$vas_tb_copy" exact="table[
+              $ships = @event.param.$selectedplayerships,
+            ]"/>
+            <raise_lua_event name="'VAS_TB.CopyByType'" param="@event.param.$object"/>
+            <reset_cue cue="this"/>
+          </actions>
+        </cue>
+
+        <cue name="CopyBySlot">
+          <conditions>
+            <event_cue_signalled/>
+          </conditions>
+          <actions>
+            <set_value name="player.entity.$vas_tb_copy" exact="table[
+              $ships = @event.param.$selectedplayerships,
+            ]"/>
+            <raise_lua_event name="'VAS_TB.CopyBySlot'" param="@event.param.$object"/>
+            <reset_cue cue="this"/>
+          </actions>
+        </cue>
+      </cues>
+    </cue>
+  </cues>
+</mdscript>
