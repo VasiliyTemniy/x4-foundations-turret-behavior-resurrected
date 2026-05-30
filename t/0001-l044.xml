@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<language id="44">
+<diff><add sel="/language">
   <page id="202600531" title="Turret Behaviour Menu" voice="no">
     <!-- "User-facing strings for VAS Turret Behaviour Menu" -->
     <!-- Mod options -->
@@ -7,8 +7,8 @@
     <t id="2">Enable debug logging</t>
 
     <!-- Right-click copy actions -->
-    <t id="10">Copy Turret Behaviour (by type)</t>
-    <t id="11">Copy Turret Behaviour (by slot)</t>
+    <t id="10">Copy Turret Behaviour by type</t>
+    <t id="11">Copy Turret Behaviour by slot</t>
 
     <!-- Interact menu root sections -->
     <t id="20">Turret Behaviour</t>
@@ -17,9 +17,9 @@
 
     <!-- Interact menu subsections -->
     <t id="30">%s Turrets</t>
-    <t id="31">%s Turrets (per type)</t>
+    <t id="31">%s Turrets per type</t>
     <t id="32">All</t>
     <t id="33">Non-Missile Turrets</t>
     <t id="34">Missile Turrets</t>
   </page>
-</language>
+</add></diff>
