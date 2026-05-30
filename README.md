@@ -182,3 +182,7 @@ when slot position carries meaning the source ship has set up deliberately.
 - **SirNuke** — *Mod Support APIs*, providing the Lua loader and Interact
   Menu API used by the copy actions.
 - Port and copy-paste feature by **VasiliyTemniy**.
+
+## Source
+
+https://github.com/VasiliyTemniy/x4-foundations-turret-behavior-resurrected
