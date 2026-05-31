@@ -105,12 +105,22 @@ local TOWING_ACTION = { textId = 8633, kind = "mode", arg = "towing" }
 -- further down in the Copy section; we wrap the lookup in a function so the
 -- order of declarations doesn't matter -- isDebugEnabled is called lazily.
 local cachedPlayerID
-local function isDebugEnabled()
+local function playerID()
     if not cachedPlayerID then
         cachedPlayerID = ConvertStringTo64Bit(tostring(C.GetPlayerID()))
     end
-    local chance = GetNPCBlackboard(cachedPlayerID, "$vas_tb_debug_chance")
+	return cachedPlayerID
+end
+
+local function isDebugEnabled()
+    local chance = GetNPCBlackboard(playerID(), "$vas_tb_debug_chance")
     return type(chance) == "number" and chance > 0
+end
+
+local function configFlag(name, default)
+	local value = GetNPCBlackboard(playerID(), name)
+	if value == nil then return default end
+	return value == true or value == 1
 end
 
 local logBuffer = {}
@@ -971,28 +981,30 @@ local function onPrepareActions(actions, definedactions)
 	if not allowTurretMenuForInteractTarget(menu) then return end
 	snapshotInteractTarget(menu)
 
-	local occupiedShip = C.GetPlayerOccupiedShipID()
-	if occupiedShip ~= 0 then
-		findShipTurrets(menu, ConvertStringTo64Bit(tostring(occupiedShip)), true)
-	end
-
-	local selectedShips = shipsForSelection(menu)
-	if #selectedShips > 0 then
-		local onlyOccupied =
-			(occupiedShip ~= 0)
-			and (#selectedShips == 1)
-			and (selectedShips[1] == ConvertStringTo64Bit(tostring(occupiedShip)))
-		if not onlyOccupied then
+	if configFlag("$vas_tb_show_selected_ships_menu", true) then
+		local selectedShips = shipsForSelection(menu)
+		if #selectedShips > 0 then
 			for _, ship in ipairs(selectedShips) do
 				findShipTurrets(menu, ship, false)
 			end
+			return
 		end
 	end
 
-	local selectedStations = stationsForSelection()
-	if #selectedStations > 0 then
-		for _, station in ipairs(selectedStations) do
-			findStationTurrets(menu, station)
+	if configFlag("$vas_tb_show_station_menu", true) then
+		local selectedStations = stationsForSelection()
+		if #selectedStations > 0 then
+			for _, station in ipairs(selectedStations) do
+				findStationTurrets(menu, station)
+			end
+			return
+		end
+	end
+
+	if configFlag("$vas_tb_show_player_ship_menu", false) then
+		local occupiedShip = C.GetPlayerOccupiedShipID()
+		if occupiedShip ~= 0 then
+			findShipTurrets(menu, ConvertStringTo64Bit(tostring(occupiedShip)), true)
 		end
 	end
 end

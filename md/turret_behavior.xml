@@ -6,10 +6,24 @@
     ship to the other selected ships, either by turret type or by slot position.
   -->
   <cues>
-    <cue name="ModConfig" namespace="this" version="1">
+    <cue name="ModConfig" namespace="this" version="2">
       <actions>
         <set_value name="$debugEnabled" exact="false"/>
+        <set_value name="$showSelectedShipsMenu" exact="true"/>
+        <set_value name="$showStationMenu" exact="true"/>
+        <set_value name="$showPlayerShipMenu" exact="false"/>
       </actions>
+      <patch sinceversion="2">
+        <do_if value="(@$showSelectedShipsMenu + '') == 'null'">
+          <set_value name="$showSelectedShipsMenu" exact="true"/>
+        </do_if>
+        <do_if value="(@$showStationMenu + '') == 'null'">
+          <set_value name="$showStationMenu" exact="true"/>
+        </do_if>
+        <do_if value="(@$showPlayerShipMenu + '') == 'null'">
+          <set_value name="$showPlayerShipMenu" exact="false"/>
+        </do_if>
+      </patch>
     </cue>
 
     <cue name="StartSMO" instantiate="true">
@@ -50,6 +64,45 @@
           $col = 2,
           $text = {202600531,2},
         ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_CheckBox" param="table[
+          $id = 'showSelectedShipsMenu',
+          $checked = md.VAS_TurretBehavior.ModConfig.$showSelectedShipsMenu,
+          $col = 1,
+          $width = 'Helper.standardButtonHeight',
+          $height = 'Helper.standardButtonHeight',
+          $onClick = OnOptionsCheckboxChanged,
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+          $col = 2,
+          $text = {202600531,3},
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_CheckBox" param="table[
+          $id = 'showStationMenu',
+          $checked = md.VAS_TurretBehavior.ModConfig.$showStationMenu,
+          $col = 1,
+          $width = 'Helper.standardButtonHeight',
+          $height = 'Helper.standardButtonHeight',
+          $onClick = OnOptionsCheckboxChanged,
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+          $col = 2,
+          $text = {202600531,4},
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_CheckBox" param="table[
+          $id = 'showPlayerShipMenu',
+          $checked = md.VAS_TurretBehavior.ModConfig.$showPlayerShipMenu,
+          $col = 1,
+          $width = 'Helper.standardButtonHeight',
+          $height = 'Helper.standardButtonHeight',
+          $onClick = OnOptionsCheckboxChanged,
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+          $col = 2,
+          $text = {202600531,5},
+        ]"/>
       </actions>
     </cue>
 
@@ -67,6 +120,9 @@
             <set_value name="player.entity.$vas_tb_debug_chance" exact="0"/>
           </do_else>
         </do_if>
+        <set_value name="player.entity.$vas_tb_show_selected_ships_menu" exact="md.VAS_TurretBehavior.ModConfig.$showSelectedShipsMenu"/>
+        <set_value name="player.entity.$vas_tb_show_station_menu" exact="md.VAS_TurretBehavior.ModConfig.$showStationMenu"/>
+        <set_value name="player.entity.$vas_tb_show_player_ship_menu" exact="md.VAS_TurretBehavior.ModConfig.$showPlayerShipMenu"/>
         <cancel_cue cue="this"/>
       </actions>
     </cue>
@@ -80,6 +136,9 @@
         <!-- This value propagates to the LUA script with
              GetNPCBlackboard(cachedPlayerID, "$vas_tb_debug_chance") -->
         <set_value name="player.entity.$vas_tb_debug_chance" exact="$debugchance"/>
+        <set_value name="player.entity.$vas_tb_show_selected_ships_menu" exact="md.VAS_TurretBehavior.ModConfig.$showSelectedShipsMenu"/>
+        <set_value name="player.entity.$vas_tb_show_station_menu" exact="md.VAS_TurretBehavior.ModConfig.$showStationMenu"/>
+        <set_value name="player.entity.$vas_tb_show_player_ship_menu" exact="md.VAS_TurretBehavior.ModConfig.$showPlayerShipMenu"/>
       </actions>
       <cues>
         <cue name="Load_Lua_Files" instantiate="true">

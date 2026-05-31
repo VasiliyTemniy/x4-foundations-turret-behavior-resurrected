@@ -5,6 +5,9 @@
     <!-- Mod options -->
     <t id="1">VAS Turret Behaviour</t>
     <t id="2">Enable debug logging</t>
+    <t id="3">Show selected ships turret menu</t>
+    <t id="4">Show station turret menu</t>
+    <t id="5">Show player ship turret menu</t>
 
     <!-- Right-click copy actions -->
     <t id="10">Copy Turret Behaviour by type</t>
