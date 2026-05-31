@@ -4,7 +4,7 @@ A right-click-menu mod for X4: Foundations that lets you set turret behaviour
 in bulk — across fleets, per turret size, per turret type — and copy a ship's
 turret configuration onto other ships in one click.
 
-Original design and turret-walking logic by **Berserk Knight** (2020).
+Original design and turret-walking logic by **Berserk Knight** (2019).
 This is a port to current X4 on top of **kuertee UI Extensions**, with a few
 additions on top.
 
@@ -12,9 +12,9 @@ additions on top.
 
 ## Dependencies
 
-- **kuertee UI Extensions and HUD** — provides the patched interact menu and
+- **kuertee UI Extensions and HUD** ([link](https://www.nexusmods.com/x4foundations/mods/552)) — provides the patched interact menu and
   its callback API. The whole UI integration runs through it.
-- **SirNukes Mod Support APIs** — provides the Lua loader and the
+- **SirNukes Mod Support APIs** ([link](https://www.nexusmods.com/x4foundations/mods/503)) — provides the Lua loader and the
   Interact Menu API used by the copy actions.
 
 Both are hard dependencies. The mod will not load without them.
@@ -158,9 +158,7 @@ when slot position carries meaning the source ship has set up deliberately.
 
 ### Notes and caveats
 
-- Mode and armed state are both copied. There is no way to copy only one.
-- Turret behaviour is set on **groups** for grouped turrets (capital ships),
-  not per individual turret instance — that matches the game's own model.
+- Mode and armed state are both copied.
 - Stations are not valid copy sources or destinations from these entries;
   use the station section of the right-click menu for station turrets.
 - No undo. Pick carefully; or use the menu to reapply.
@@ -171,9 +169,9 @@ when slot position carries meaning the source ship has set up deliberately.
 
 ## Credits
 
-- **Berserk Knight** — original *Turret Behaviour Menu* mod (2020); menu
+- **Berserk Knight** — original *Turret Behaviour Menu* mod (2019 last upd 2022); menu
   structure and turret-walking logic.
-- **Silentdeth** — original *RightClickAPI* / *G_Work_Around* which the 2020
+- **morbideth** — original *RightClickAPI* / *G_Work_Around* which the 2019
   mod depended on. Both are no longer used in this port.
 - **kuertee** and contributors — *UI Extensions and HUD*, on which this mod
   builds its interact-menu integration.
