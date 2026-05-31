@@ -4,7 +4,7 @@
   name="[VAS] Turret Behavior Menu (Resurrected)"
   description="Resurrected port of Berserk Knight's Turret Behavior Menu. Adds turret behavior options (arm/disarm, attack enemies / capitals / fighters, defend, mining, missile defence, auto-assist) to the right-click menu — per turret size and per turret type, for the player ship, selected ships and player-owned stations. Rebuilt on top of kuertee UI Extensions instead of the original RightClickAPI / G_Work_Around dependencies. All credit for the original design goes to Berserk Knight."
   author="VasiliyTemniy"
-  version="100"
+  version="102"
   date="2026-05-24"
   save="0">
   <dependency id="kuerteeUIExtensionsAndHUD" optional="false" name="kuertee UI Extensions and HUD"/>
