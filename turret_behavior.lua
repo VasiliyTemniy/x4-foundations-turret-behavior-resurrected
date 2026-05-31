@@ -7,7 +7,7 @@
 
 		All turrets  →  per-size (XL/L/M/S)  →  per-turret-type
 
-	Original design by Berserk Knight (2020). Original mod used Silentdeth's
+	Original design by Berserk Knight (2019). Original mod used morbideth's
 	RightClickAPI / G_Work_Around (both broken on current X4). This rewrite drops
 	those and registers directly with kuertee UI Extensions' interact-menu
 	callbacks instead. All credit for the menu structure and turret-walk logic
