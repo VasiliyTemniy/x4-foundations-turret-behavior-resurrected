@@ -24,11 +24,15 @@ Both are hard dependencies. The mod will not load without them.
 ## Mass turret-behaviour menu
 
 Open the right-click menu in space, on the map, or directly on a player-owned
-ship/station. The mod adds three sections, each shown only when relevant:
+ship/station. The mod can add one of three sections, each shown only when relevant:
 
 - **Turret Behaviour** — for the player's *occupied* ship.
 - **Selected Turret Behaviour** — for the ships in your current map selection.
 - **Station Turret Behaviour** — for the player-owned station you clicked.
+
+The menu picks one scope at a time: selected ships first, then stations, then
+the player's occupied ship. Extension Options can hide any of these three
+sections; the player-ship section is off by default.
 
 Each section has the same flat layout at root level (sizes the player doesn't
 own are hidden):
@@ -162,8 +166,8 @@ when slot position carries meaning the source ship has set up deliberately.
 - Stations are not valid copy sources or destinations from these entries;
   use the station section of the right-click menu for station turrets.
 - No undo. Pick carefully; or use the menu to reapply.
-- Debug logging is off by default. Enable it from Extension Options if you need
-  troubleshooting output.
+- Extension Options can hide the selected-ships, station, and player-ship menu
+  sections. Debug logging is also available there and is off by default.
 
 ---
 
