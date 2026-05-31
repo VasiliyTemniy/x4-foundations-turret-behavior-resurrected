@@ -1,4 +1,4 @@
-$mod = "vas_turret_behaviour_resurrected"
+$mod = "vas_turret_behavior_resurrected"
 $pkg = Join-Path $PSScriptRoot "packages\$mod"
 $ts  = Get-Date -Format "dd-MM-yyyy_HHmmss"
 $zip = Join-Path $PSScriptRoot "packages\${mod}_${ts}.zip"

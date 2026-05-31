@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-MOD="vas_turret_behaviour_resurrected"
+MOD="vas_turret_behavior_resurrected"
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 PKG="$ROOT/packages/$MOD"
 TS="$(date +%d-%m-%Y_%H%M%S)"
