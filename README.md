@@ -19,6 +19,13 @@ additions on top.
 
 Both are hard dependencies. The mod will not load without them.
 
+Please, **make sure to use the latest Kuertee's UI Extensions mod available for your game version**.
+If it was not installed previously and the protected ui mode was "on", you would have to
+disable the protected ui mode first. To do that, first you would have to disable all ui
+mods, including Kuertee's UI Extensions, then reload the game, then turn off the protected
+mode, reload the game again, turn on all the mods you like, reload the game again...
+Then you can play! :)
+
 ---
 
 ## Mass turret-behaviour menu
