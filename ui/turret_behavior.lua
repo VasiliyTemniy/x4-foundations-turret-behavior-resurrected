@@ -818,6 +818,10 @@ local function ensureTypeGroup(menu, baseId, size, turretType)
 	return groupId, true
 end
 
+local function supportsNestedGroups(menu)
+	return type(menu.insertInteractionGroup) == "function"
+end
+
 -- ============================================================================
 -- Button population
 -- ============================================================================
@@ -858,12 +862,16 @@ end
 local function addShipTurretButtons(menu, baseId, size, turretType, isSelf, istug)
 	local allId       = baseId .. "_all"
 	local sizeId      = baseId .. "_" .. size
-	local typesId     = baseId .. "_" .. size .. "_types"
-	local typeId, isNewType = ensureTypeGroup(menu, baseId, size, turretType)
 
 	-- Flat root subsections (action buttons only; populated once per open).
 	populateShipSection(menu, allId,  nil,  "all", isSelf, false)
 	populateShipSection(menu, sizeId, size, nil,   isSelf, false)
+
+	if not supportsNestedGroups(menu) then return end
+
+	local typesId     = baseId .. "_" .. size .. "_types"
+	local typeId, isNewType = ensureTypeGroup(menu, baseId, size, turretType)
+
 	-- Per-type listing goes inside the sibling "_types" root subsection via
 	-- chemodun's nested-group navigation. Group buttons are added once per
 	-- (size, type); the action buttons for that type are populated lazily.
@@ -879,12 +887,16 @@ local function addStationTurretButtons(menu, size, turretType, ismissileturret)
 	local missileScope = ismissileturret and "allmissile" or "allnonmissile"
 	local allId   = baseId .. "_all"
 	local sizeId  = baseId .. "_" .. size
-	local typesId = baseId .. "_" .. size .. "_types"
-	local typeId, isNewType = ensureTypeGroup(menu, baseId, size, turretType)
 
 	populateStationSection(menu, allId,     nil,  "all")
 	populateStationSection(menu, sizeId,    size, nil)
 	populateStationSection(menu, missileId, nil,  missileScope)
+
+	if not supportsNestedGroups(menu) then return end
+
+	local typesId = baseId .. "_" .. size .. "_types"
+	local typeId, isNewType = ensureTypeGroup(menu, baseId, size, turretType)
+
 	if isNewType then
 		menu.insertInteractionGroup(typesId, typeId, turretType)
 	end
