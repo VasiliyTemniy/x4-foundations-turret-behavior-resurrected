@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mdscript name="VAS_TurretBehavior_Config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="md.xsd">
+  <!--
+    Extension Options UI for Turret Behavior Menu. UI only: config STATE lives in
+    md.VAS_TurretBehavior.ModConfig (the released script - relocating a state cue
+    would reset every player's settings), and defaults are seeded there by its
+    SeedDefaults library. This script reads and writes that cue cross-script.
+  -->
+  <cues>
+    <cue name="StartSMO" instantiate="true">
+      <conditions>
+        <event_cue_signalled cue="md.Simple_Menu_Options.Reloaded"/>
+      </conditions>
+      <actions>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Register_Options_Menu" param="table[
+          $id = 'vas_tb_options_menu',
+          $columns = 2,
+          $title = {202600531,1},
+          $onOpen = BuildOptionsMenu,
+        ]"/>
+        <cancel_cue cue="this"/>
+      </actions>
+    </cue>
+
+    <cue name="BuildOptionsMenu" instantiate="true">
+      <conditions>
+        <event_cue_signalled/>
+      </conditions>
+      <actions>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Call_Table_Method" param="table[
+          $method = 'setColWidth',
+          $col = 1,
+          $width = 'Helper.standardButtonHeight',
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_CheckBox" param="table[
+          $id = 'debugEnabled',
+          $checked = @md.VAS_TurretBehavior.ModConfig.$debugEnabled,
+          $col = 1,
+          $width = 'Helper.standardButtonHeight',
+          $height = 'Helper.standardButtonHeight',
+          $onClick = OnOptionsCheckboxChanged,
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+          $col = 2,
+          $text = {202600531,2},
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_CheckBox" param="table[
+          $id = 'showSelectedShipsMenu',
+          $checked = @md.VAS_TurretBehavior.ModConfig.$showSelectedShipsMenu,
+          $col = 1,
+          $width = 'Helper.standardButtonHeight',
+          $height = 'Helper.standardButtonHeight',
+          $onClick = OnOptionsCheckboxChanged,
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+          $col = 2,
+          $text = {202600531,3},
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_CheckBox" param="table[
+          $id = 'showStationMenu',
+          $checked = @md.VAS_TurretBehavior.ModConfig.$showStationMenu,
+          $col = 1,
+          $width = 'Helper.standardButtonHeight',
+          $height = 'Helper.standardButtonHeight',
+          $onClick = OnOptionsCheckboxChanged,
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+          $col = 2,
+          $text = {202600531,4},
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Add_Row"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_CheckBox" param="table[
+          $id = 'showPlayerShipMenu',
+          $checked = @md.VAS_TurretBehavior.ModConfig.$showPlayerShipMenu,
+          $col = 1,
+          $width = 'Helper.standardButtonHeight',
+          $height = 'Helper.standardButtonHeight',
+          $onClick = OnOptionsCheckboxChanged,
+        ]"/>
+        <signal_cue_instantly cue="md.Simple_Menu_API.Make_Text" param="table[
+          $col = 2,
+          $text = {202600531,5},
+        ]"/>
+      </actions>
+    </cue>
+
+    <cue name="OnOptionsCheckboxChanged" instantiate="true">
+      <conditions>
+        <event_cue_signalled/>
+      </conditions>
+      <actions>
+        <set_value name="md.VAS_TurretBehavior.ModConfig.{'$' + event.param.$id}" exact="event.param.$checked"/>
+        <do_if value="event.param.$id == 'debugEnabled'">
+          <do_if value="event.param.$checked">
+            <set_value name="player.entity.$vas_tb_debug_chance" exact="100"/>
+          </do_if>
+          <do_else>
+            <set_value name="player.entity.$vas_tb_debug_chance" exact="0"/>
+          </do_else>
+        </do_if>
+        <set_value name="player.entity.$vas_tb_show_selected_ships_menu" exact="md.VAS_TurretBehavior.ModConfig.$showSelectedShipsMenu"/>
+        <set_value name="player.entity.$vas_tb_show_station_menu" exact="md.VAS_TurretBehavior.ModConfig.$showStationMenu"/>
+        <set_value name="player.entity.$vas_tb_show_player_ship_menu" exact="md.VAS_TurretBehavior.ModConfig.$showPlayerShipMenu"/>
+        <cancel_cue cue="this"/>
+      </actions>
+    </cue>
+  </cues>
+</mdscript>
