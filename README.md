@@ -10,6 +10,14 @@ additions on top.
 
 ---
 
+## Game version compatibility
+
+- 9.00 release - **supported**
+- 9.00 betas and release candidates - **supported**
+- 8.00 release - **partially supported**. Some minor features are disabled (submenus per turret type). Copy-paste config feature works, turret config per size works.
+
+---
+
 ## Dependencies
 
 - **kuertee UI Extensions and HUD** ([link](https://www.nexusmods.com/x4foundations/mods/552)) — provides the patched interact menu and

@@ -6,6 +6,16 @@ Original design and turret-walking logic by [b]Berserk Knight[/b] (2019). This i
 
 [line]
 
+[size=4][b]Game version compatibility[/b][/size]
+
+[list]
+[*][i] 9.00 release[/i] - [b]supported[/b][/*]
+[*][i] 9.00 betas and release candidates[/i] - [b]supported[/b][/*]
+[*][i] 8.00 release[/i] - [b]supported[/b][/*]
+[/list]
+
+[line]
+
 [size=4][b]Dependencies[/b][/size]
 
 [list]
@@ -24,9 +34,9 @@ Please, [b]make sure to use the latest Kuertee's UI Extensions mod available for
 Open the right-click menu in space, on the map, or directly on a player-owned ship/station. The mod can add one of three sections, each shown only when relevant:
 
 [list]
-[*][b]Turret Behaviour[/b] — for the player's [i]occupied[/i] ship.
-[*][b]Selected Turret Behaviour[/b] — for the ships in your current map selection.
-[*][b]Station Turret Behaviour[/b] — for the player-owned station you clicked.
+[*][b]Turret Behaviour[/b] — for the player's [i]occupied[/i] ship.[.*]
+[*][b]Selected Turret Behaviour[/b] — for the ships in your current map selection.[.*]
+[*][b]Station Turret Behaviour[/b] — for the player-owned station you clicked.[.*]
 [/list]
 
 The menu picks one scope at a time: selected ships first, then stations, then the player's occupied ship. Extension Options can hide any of these three sections; the player-ship section is off by default.
@@ -51,15 +61,15 @@ The "per type" entries use a nested navigation panel (chemodun's sub-group API f
 Available actions inside every leaf section:
 
 [list]
-[*][b]Armed / Disarmed[/b]
-[*][b]Attack all enemies[/b]
-[*][b]Attack only capital ships[/b] / [b]Attack capital ships first[/b]
-[*][b]Attack only fighters[/b] / [b]Attack fighters first[/b]
-[*][b]Defend[/b]
-[*][b]Mining[/b] [i](ships only)[/i]
-[*][b]Missile defence[/b] / [b]Shoot missiles first[/b]
-[*][b]Attack my current enemy[/b] [i](ships only)[/i]
-[*][b]Towing[/b] [i](only on per-type entries for tug-class turrets)[/i]
+[*][b]Armed / Disarmed[/b][/*]
+[*][b]Attack all enemies[/b][/*]
+[*][b]Attack only capital ships[/b] / [b]Attack capital ships first[/b][/*]
+[*][b]Attack only fighters[/b] / [b]Attack fighters first[/b][/*]
+[*][b]Defend[/b][/*]
+[*][b]Mining[/b] [i](ships only)[/i][/*]
+[*][b]Missile defence[/b] / [b]Shoot missiles first[/b][/*]
+[*][b]Attack my current enemy[/b] [i](ships only)[/i][/*]
+[*][b]Towing[/b] [i](only on per-type entries for tug-class turrets)[/i][/*]
 [/list]
 
 The station section additionally exposes [b]All Missile Turrets[/b] / [b]All Non-Missile Turrets[/b] alongside the size buckets.
@@ -69,9 +79,9 @@ The station section additionally exposes [b]All Missile Turrets[/b] / [b]All Non
 The intent is: pick the smallest scope that does what you need.
 
 [list]
-[*][i]Whole fleet, blanket order[/i]: top-level [b]All[/b] → done.
-[*][i]One size class across a fleet[/i]: [b]L Turrets[/b] / [b]M Turrets[/b] → done.
-[*][i]Specific turret model, e.g. all "L Beam Mk1"[/i]: open [b]L Turrets (per type)[/b] → click [b]L Beam Mk1[/b] → pick the mode.
+[*][i]Whole fleet, blanket order[/i]: top-level [b]All[/b] → done.[/*]
+[*][i]One size class across a fleet[/i]: [b]L Turrets[/b] / [b]M Turrets[/b] → done.[/*]
+[*][i]Specific turret model, e.g. all "L Beam Mk1"[/i]: open [b]L Turrets (per type)[/b] → click [b]L Beam Mk1[/b] → pick the mode.[/*]
 [/list]
 
 This keeps the menu navigable even with very large fleet selections, where the per-type list would otherwise scroll off the screen.
@@ -83,8 +93,8 @@ This keeps the menu navigable even with very large fleet selections, where the p
 When you right-click a [b]player-owned ship[/b] while you have [b]at least one other player ship selected[/b] in the map, two extra entries appear in the [i]Orders for ...[/i] section:
 
 [list]
-[*][b]Copy Turret Behaviour (by type)[/b]
-[*][b]Copy Turret Behaviour (by slot)[/b]
+[*][b]Copy Turret Behaviour (by type)[/b][/*]
+[*][b]Copy Turret Behaviour (by slot)[/b][/*]
 [/list]
 
 Both copy the [i]full[/i] behaviour (mode + armed/disarmed) of the right-clicked ship's turrets onto every other ship in the current selection. The right-clicked ship itself is excluded. If the right-clicked ship has no turrets, the operation is skipped silently.
@@ -94,9 +104,9 @@ The two modes differ in how they decide [i]which[/i] config from the source maps
 Both algorithms share the same fallback chain — they only differ in their first tier. The shared tail is, in order:
 
 [list=1]
-[*][b]Same firing style at same size[/b]: source's first turret of the same size whose firing-style icon (the small icon on each turret card in the equipment UI) matches the destination's. Two turrets share a firing style when the game UI renders the same icon for them, so e.g. Plasma↔Plasma, Bolt↔Bolt, Beam↔Beam, Tracking↔Tracking. This means a destination M Bolt Mk1 with no source M Bolt will still pick up a source M Pulse Mk1's config only if Pulse and Bolt share an icon (they don't), but will gladly pick up another M Bolt variant when available.
-[*][b]Same size, any firing style[/b]: source's first turret of the same size.
-[*][b]Fallback[/b]: source's very first turret, period.
+[*][b]Same firing style at same size[/b]: source's first turret of the same size whose firing-style icon (the small icon on each turret card in the equipment UI) matches the destination's. Two turrets share a firing style when the game UI renders the same icon for them, so e.g. Plasma↔Plasma, Bolt↔Bolt, Beam↔Beam, Tracking↔Tracking. This means a destination M Bolt Mk1 with no source M Bolt will still pick up a source M Pulse Mk1's config only if Pulse and Bolt share an icon (they don't), but will gladly pick up another M Bolt variant when available.[/*]
+[*][b]Same size, any firing style[/b]: source's first turret of the same size.[/*]
+[*][b]Fallback[/b]: source's very first turret, period.[/*]
 [/list]
 
 [size=3][b]Algorithm — by type[/b][/size]
@@ -104,8 +114,8 @@ Both algorithms share the same fallback chain — they only differ in their firs
 The first tier:
 
 [list]
-[*]Take the destination turret's [font=Courier New](size, type)[/font] — e.g. [font=Courier New](M, Plasma Mk1)[/font].
-[*]If the source ship has a turret with exactly the same [font=Courier New](size, type)[/font], apply its mode + armed state.
+[*]Take the destination turret's [font=Courier New](size, type)[/font] — e.g. [font=Courier New](M, Plasma Mk1)[/font].[/*]
+[*]If the source ship has a turret with exactly the same [font=Courier New](size, type)[/font], apply its mode + armed state.[/*]
 [/list]
 
 Then fall through the shared chain above.
@@ -117,8 +127,8 @@ Use this mode when copying across [b]different ship hulls[/b] — the source and
 The first tier:
 
 [list]
-[*]Take the destination turret's [b]slot index[/b] (for singular hull slots) or its [font=Courier New](path, group)[/font] identifier (for grouped turrets on capital ships).
-[*]If the source has a turret at the same identifier [i]and[/i] the sizes line up, apply its config.
+[*]Take the destination turret's [b]slot index[/b] (for singular hull slots) or its [font=Courier New](path, group)[/font] identifier (for grouped turrets on capital ships).[/*]
+[*]If the source has a turret at the same identifier [i]and[/i] the sizes line up, apply its config.[/*]
 [/list]
 
 Then fall through the shared chain above.
@@ -130,9 +140,9 @@ The "by type" mode would collapse all those M Pulse Mk1 turrets to one common be
 [size=3][b]Choosing between the two[/b][/size]
 
 [list]
-[*][b]Different ship classes / loadouts[/b] in the selection → use [b]by type[/b].
-[*][b]Same hull, same equipped types, blanket per-type behaviour[/b] → use [b]by type[/b].
-[*][b]Same hull, per-position tuning that varies between slots[/b] → use [b]by slot[/b].
+[*][b]Different ship classes / loadouts[/b] in the selection → use [b]by type[/b].[/*]
+[*][b]Same hull, same equipped types, blanket per-type behaviour[/b] → use [b]by type[/b].[/*]
+[*][b]Same hull, per-position tuning that varies between slots[/b] → use [b]by slot[/b].[/*]
 [/list]
 
 When in doubt, [b]by type[/b] is the safer default. [b]By slot[/b] only beats it when slot position carries meaning the source ship has set up deliberately.
@@ -140,10 +150,10 @@ When in doubt, [b]by type[/b] is the safer default. [b]By slot[/b] only beats it
 [size=3][b]Notes and caveats[/b][/size]
 
 [list]
-[*]Mode and armed state are both copied.
-[*]Stations are not valid copy sources or destinations from these entries; use the station section of the right-click menu for station turrets.
-[*]No undo. Pick carefully; or use the menu to reapply.
-[*]Extension Options can hide the selected-ships, station, and player-ship menu sections. Debug logging is also available there and is off by default.
+[*]Mode and armed state are both copied.[/*]
+[*]Stations are not valid copy sources or destinations from these entries; use the station section of the right-click menu for station turrets.[/*]
+[*]No undo. Pick carefully; or use the menu to reapply.[/*]
+[*]Extension Options can hide the selected-ships, station, and player-ship menu sections. Debug logging is also available there and is off by default.[/*]
 [/list]
 
 [line]
@@ -151,12 +161,12 @@ When in doubt, [b]by type[/b] is the safer default. [b]By slot[/b] only beats it
 [size=4][b]Credits[/b][/size]
 
 [list]
-[*][b]Berserk Knight[/b] — original [i]Turret Behaviour Menu[/i] mod (2019 last upd 2022); menu structure and turret-walking logic.
-[*][b]morbideth[/b] — original [i]RightClickAPI[/i] / [i]G_Work_Around[/i] which the 2022 mod depended on. Both are no longer used in this port.
-[*][b]kuertee[/b] and contributors — [i]UI Extensions and HUD[/i], on which this mod builds its interact-menu integration.
-[*][b]chemodun[/b] — nested sub-subsection navigation in kuertee's interact menu, used here for the "per type" entries.
-[*][b]SirNuke[/b] — [i]Mod Support APIs[/i], providing the Lua loader and Interact Menu API used by the copy actions.
-[*]Port and copy-paste feature by [b]VasiliyTemniy[/b].
+[*][b]Berserk Knight[/b] — original [i]Turret Behaviour Menu[/i] mod (2019 last upd 2022); menu structure and turret-walking logic.[/*]
+[*][b]morbideth[/b] — original [i]RightClickAPI[/i] / [i]G_Work_Around[/i] which the 2022 mod depended on. Both are no longer used in this port.[/*]
+[*][b]kuertee[/b] and contributors — [i]UI Extensions and HUD[/i], on which this mod builds its interact-menu integration.[/*]
+[*][b]chemodun[/b] — nested sub-subsection navigation in kuertee's interact menu, used here for the "per type" entries.[/*]
+[*][b]SirNuke[/b] — [i]Mod Support APIs[/i], providing the Lua loader and Interact Menu API used by the copy actions.[/*]
+[*]Port and copy-paste feature by [b]VasiliyTemniy[/b].[/*]
 [/list]
 
 [size=4][b]Source[/b][/size]
