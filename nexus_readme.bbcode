@@ -19,7 +19,7 @@ Original design and turret-walking logic by [b]Berserk Knight[/b] (2019). This i
 [size=4][b]Dependencies[/b][/size]
 
 [list]
-[*][b]kuertee UI Extensions and HUD[/b] ([url=https://www.nexusmods.com/x4foundations/mods/552]link[/url]) — provides the patched interact menu and its callback API. The whole UI integration runs through it.
+[*][b]kuertee UI Extensions and HUD[/b] ([url=https://www.nexusmods.com/x4foundations/mods/552]link[/url]) — provides the patched interact menu and its callback API. The whole UI integration runs through it.[/*]
 [*][b]SirNukes Mod Support APIs[/b] ([url=https://www.nexusmods.com/x4foundations/mods/503]link[/url]) - provides the Lua loader, interact-menu API, and simple menu/options helpers.[/*]
 [/list]
 
@@ -34,9 +34,9 @@ Please, [b]make sure to use the latest Kuertee's UI Extensions mod available for
 Open the right-click menu in space, on the map, or directly on a player-owned ship/station. The mod can add one of three sections, each shown only when relevant:
 
 [list]
-[*][b]Turret Behaviour[/b] — for the player's [i]occupied[/i] ship.[.*]
-[*][b]Selected Turret Behaviour[/b] — for the ships in your current map selection.[.*]
-[*][b]Station Turret Behaviour[/b] — for the player-owned station you clicked.[.*]
+[*][b]Turret Behaviour[/b] — for the player's [i]occupied[/i] ship.[/*]
+[*][b]Selected Turret Behaviour[/b] — for the ships in your current map selection.[/*]
+[*][b]Station Turret Behaviour[/b] — for the player-owned station you clicked.[/*]
 [/list]
 
 The menu picks one scope at a time: selected ships first, then stations, then the player's occupied ship. Extension Options can hide any of these three sections; the player-ship section is off by default.
@@ -45,16 +45,15 @@ Each section has the same flat layout at root level (sizes the player doesn't ow
 
 [code]
 Turret Behaviour
-├─ All                       — every turret on the target
-├─ XL Turrets                — all XL turrets
-├─ XL Turrets (per type)     — list of XL types → click any to drill in
-├─ L Turrets                 — all L turrets
+├─ All                       — every turret on the target
+├─ XL Turrets                — all XL turrets
+├─ XL Turrets (per type)     — list of XL types → click any to drill in
+├─ L Turrets                 — all L turrets
 ├─ L Turrets (per type)
-├─ M Turrets                 — all M turrets
+├─ M Turrets                 — all M turrets
 ├─ M Turrets (per type)
-├─ S Turrets                 — all S turrets
-└─ S Turrets (per type)
-[/code]
+├─ S Turrets                 — all S turrets
+└─ S Turrets (per type)[/code]
 
 The "per type" entries use a nested navigation panel (chemodun's sub-group API from kuertee). Click into one to reach a specific turret type and apply behaviour to it alone.
 
