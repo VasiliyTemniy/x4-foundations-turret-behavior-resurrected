@@ -190,7 +190,7 @@ when slot position carries meaning the source ship has set up deliberately.
 
 - **Berserk Knight** — original *Turret Behaviour Menu* mod (2019 last upd 2022); menu
   structure and turret-walking logic.
-- **morbideth** — original *RightClickAPI* / *G_Work_Around* which the 2019
+- **morbideth** — original *RightClickAPI* / *G_Work_Around* which the 2022
   mod depended on. Both are no longer used in this port.
 - **kuertee** and contributors — *UI Extensions and HUD*, on which this mod
   builds its interact-menu integration.
