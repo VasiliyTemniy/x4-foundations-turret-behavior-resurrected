@@ -1026,7 +1026,6 @@ end
 -- ============================================================================
 
 local function init()
-	DebugError("VAS_TurretBehavior init")
 
 	for _, m in ipairs(Menus) do
 		if m.name == "InteractMenu" then
